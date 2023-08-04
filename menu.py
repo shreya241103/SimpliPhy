@@ -21,7 +21,7 @@ FPS = 50
 
 # Function for application1
 def application1():
-    simulate()
+    simulate_bounce()
 
 # Function for application2
 def application2():
