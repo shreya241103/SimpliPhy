@@ -18,9 +18,7 @@ space1 = pymunk.Space()
 # Frames per second for applications
 FPS = 50
 
-
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Function for application1
 def application1():
     scr_wd, scr_ht = 800, 800
     display = pygame.display.set_mode((scr_wd, scr_ht))
@@ -62,28 +60,33 @@ def application1():
         pygame.draw.line(display, color, trans_coord(coord_left), trans_coord(coord_right), width)
 
     def simulate():
-        while True:
+        return_to_menu = False
+
+        while not return_to_menu:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    return
+                    return_to_menu = True
+
             display.fill((255, 255, 255))
             x, y = trans_coord(body.position)
-            pygame.draw.circle(display, (255, 0, 0),
-                               (int(x), int(y)),
-                               shape.radius)
+            pygame.draw.circle(display, (255, 0, 0), (int(x), int(y)), shape.radius)
             drawSegment(fl_shape, display)
             pygame.display.update()
             clock.tick(FPS)
             space.step(1/FPS)
-            return
 
     simulate()
-    return
 
 # Function for application2
 def application2():
-    pass
-    # Your application2 code here
+    return_to_menu = False
+
+    while not return_to_menu:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return_to_menu = True
+
+        # Your application2 code here
 
 # Main menu loop
 def main_menu():
@@ -111,8 +114,8 @@ def main_menu():
 
         # Draw text on buttons
         font = pygame.font.SysFont(None, 30)
-        text1 = font.render("Game 1", True, (255, 255, 255))
-        text2 = font.render("Game 2", True, (255, 255, 255))
+        text1 = font.render("Application 1", True, (255, 255, 255))
+        text2 = font.render("Application 2", True, (255, 255, 255))
         menu_screen.blit(text1, (240, 110))
         menu_screen.blit(text2, (240, 210))
 
@@ -121,10 +124,11 @@ def main_menu():
         # Handle logic and rendering for the selected application
         if current_application == "app1":
             application1()
-            continue
+            current_application = None  # Reset the current_application to None when returning to the menu
+
         elif current_application == "app2":
             application2()
-            continue
+            current_application = None  # Reset the current_application to None when returning to the menu
 
 if __name__ == "__main__":
     main_menu()
