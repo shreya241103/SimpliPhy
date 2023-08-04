@@ -62,7 +62,7 @@ def main_menu():
                 elif 200 < x < 400 and 300 < y < 350:  # Button for Game 3
                     current_application = "app3"
 
-        menu_screen.fill(WHITE)  # Fill the menu screen with a background color
+        menu_screen.fill((2, 2, 80))  # Fill the menu screen with a background color
 
         # Draw menu buttons or other UI elements
         pygame.draw.rect(menu_screen, (0, 0, 255), pygame.Rect(200, 100, 400, 50))
