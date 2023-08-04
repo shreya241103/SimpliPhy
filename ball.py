@@ -19,6 +19,9 @@ class Ball:
         self.shape.elasticity = elasticity
         self.shape.collision_type = collision_type
         self.color = color
+        self.vel_history = {}
+        self.pos_history = {}
+        self.pos_history = {}
         space.add(self.body, self.shape)
 
     def getPosition(self):

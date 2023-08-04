@@ -17,9 +17,9 @@ def create(ht, vel):
     space = pymunk.Space()
     space.gravity = 0, -981
 
-    ball = Ball(space, 20, (100, ht), (0, 255, 0), vel, elasticity= 2/3)
+    ball = Ball(space, 20, (200, ht), (0, 255, 0), vel, elasticity= 2/3)
 
-    floor = StaticSegment( space, (0, 30), (800, 30), 10, 2)
+    floor = StaticSegment( space, (0, 0), (800, 0), 10, 2)
     wall_right = StaticSegment( space, (scr_wd, 0), (scr_wd, scr_ht + 1000), 0)
     wall_left = StaticSegment(space, (0, 0), (0, scr_ht + 1000), 0)
 
@@ -33,9 +33,11 @@ def collide(arbiter, space, data):
 
 def calcDist(arbiter, space, data):
     global dist
-    max_d = ((ball.body.velocity[1]/ 100) * (ball.body.velocity[1]/ 100) )/ (2*9.81)
-    print(max_d)
-    dist += (max_d*2)
+    max_d = ( (ball.body.velocity[1]) * (ball.body.velocity[1]) )/ (2 * abs(space.gravity[1]))
+    if  max_d*2/100 > 0.1:
+        print(int(ball.body.velocity[1]))
+        print(max_d)
+        dist += int(max_d*2/100)
     return True
 
 def updateText(display, data, coord):
@@ -53,7 +55,8 @@ def simulate_bounce(ht, vel):
     display = pygame.display.set_mode((scr_wd, scr_ht))
     clock = pygame.time.Clock()
     create(ht, vel)
-    dist = ht
+    global dist
+    dist = int(ht/100)
     global collisions
     collisions = 0
     while True:
@@ -63,10 +66,17 @@ def simulate_bounce(ht, vel):
         display.fill((255, 255, 255))
         col = space.add_collision_handler( 1, 2)
         col.begin = collide
-        col.post_solve = calcDist
+        col.separate = calcDist
         floor.drawSegment(display)
         updateText(display, collisions, (700, 700))
-        updateText(display, dist, (600, 600))
+        updateText(display, dist, (700, 600))
+        updateText(display, "1", (6, 100))
+        updateText(display, "2", (6, 200))
+        updateText(display, "3", (6, 300))
+        updateText(display, "4", (6, 400))
+        updateText(display, "5", (6, 500))
+        updateText(display, "6", (6, 600))
+        updateText(display, "7", (6, 700))
         ball.drawBall(display)
         pygame.display.update()
         clock.tick(FPS)
