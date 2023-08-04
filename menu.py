@@ -60,8 +60,8 @@ def main_menu():
 
         # Draw text on buttons
         font = pygame.font.SysFont(None, 30)
-        text1 = font.render("Application 1", True, (255, 255, 255))
-        text2 = font.render("Application 2", True, (255, 255, 255))
+        text1 = font.render("Game 1", True, (255, 255, 255))
+        text2 = font.render("Game 2", True, (255, 255, 255))
         menu_screen.blit(text1, (240, 110))
         menu_screen.blit(text2, (240, 210))
 
