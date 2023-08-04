@@ -23,10 +23,17 @@ def create(ht, vel):
     wall_right = StaticSegment( space, (scr_wd, 0), (scr_wd, scr_ht + 1000), 0)
     wall_left = StaticSegment(space, (0, 0), (0, scr_ht + 1000), 0)
 
-
 collisions = 0
 dist = 0
 def collide(arbiter, space, data):
+    global dist, text, textRect
+    font = pygame.font.Font( None,
+                            50)
+    text = font.render(f'{dist}',
+                       True,
+                       (0, 0, 255))
+    textRect = text.get_rect()
+    textRect.center = trans_coord((700, 600))
     global collisions
     collisions += 1
     return True
@@ -50,8 +57,14 @@ def updateText(display, data, coord):
     textRect.center = trans_coord((coord))
     display.blit(text, textRect)
 
+pygame.init()
+font = pygame.font.Font( None,
+                            50)
+text = font.render(f'{0}',
+                       True,
+                       (0, 0, 255))
+textRect = text.get_rect()
 def simulate_bounce(ht, vel):
-    pygame.init()
     display = pygame.display.set_mode((scr_wd, scr_ht))
     clock = pygame.time.Clock()
     create(ht, vel)
@@ -69,7 +82,8 @@ def simulate_bounce(ht, vel):
         col.separate = calcDist
         floor.drawSegment(display)
         updateText(display, collisions, (700, 700))
-        updateText(display, dist, (700, 600))
+        # updateText(display, dist, (700, 600))
+        display.blit(text, textRect)
         updateText(display, "1", (6, 100))
         updateText(display, "2", (6, 200))
         updateText(display, "3", (6, 300))
