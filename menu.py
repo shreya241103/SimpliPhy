@@ -1,8 +1,10 @@
 import pygame
 import pymunk
 from main import *
+import time
 from projectile import running
-from collision import *
+from collision import userInput as userInput1
+from collision import game
 # Initialize Pygame
 pygame.init()
 
@@ -34,7 +36,7 @@ def application2():
 # Function for application3
 def application3():
     # Add your code for game 3 here
-    B1_mass, B2_mass, B1_vel_x, B1_vel_y, B2_vel_x, B2_vel_y,B1_elas,B2_elas,B1_x,B1_y,B2_x,B2_y,B1_rad,B2_rad  = userInput()
+    B1_mass, B2_mass, B1_vel_x, B1_vel_y, B2_vel_x, B2_vel_y,B1_elas,B2_elas,B1_x,B1_y,B2_x,B2_y,B1_rad,B2_rad  = userInput1()
     # print( ht, vel_x, vel_y)
     game(B1_mass, B2_mass, B1_vel_x, B1_vel_y, B2_vel_x, B2_vel_y,B1_elas,B2_elas,B1_x,B1_y,B2_x,B2_y,B1_rad,B2_rad)
     time.sleep(1)  # Pause for 30 seconds
@@ -63,15 +65,15 @@ def main_menu():
         menu_screen.fill(WHITE)  # Fill the menu screen with a background color
 
         # Draw menu buttons or other UI elements
-        pygame.draw.rect(menu_screen, (0, 0, 255), pygame.Rect(200, 100, 200, 50))
-        pygame.draw.rect(menu_screen, (0, 0, 255), pygame.Rect(200, 200, 200, 50))
-        pygame.draw.rect(menu_screen, (0, 0, 255), pygame.Rect(200, 300, 200, 50))  # Button for Game 3
+        pygame.draw.rect(menu_screen, (0, 0, 255), pygame.Rect(200, 100, 400, 50))
+        pygame.draw.rect(menu_screen, (0, 0, 255), pygame.Rect(200, 200, 400, 50))
+        pygame.draw.rect(menu_screen, (0, 0, 255), pygame.Rect(200, 300, 400, 50))  # Button for Game 3
 
         # Draw text on buttons
         font = pygame.font.SysFont(None, 30)
-        text1 = font.render("Game 1", True, (255, 255, 255))
-        text2 = font.render("Game 2", True, (255, 255, 255))
-        text3 = font.render("Game 3", True, (255, 255, 255))  # Text for Game 3
+        text1 = font.render("Bouncing Balls", True, (255, 255, 255))
+        text2 = font.render("Projectile Motion", True, (255, 255, 255))
+        text3 = font.render("Collision", True, (255, 255, 255))  # Text for Game 3
         menu_screen.blit(text1, (240, 110))
         menu_screen.blit(text2, (240, 210))
         menu_screen.blit(text3, (240, 310))  # Position for Game 3
