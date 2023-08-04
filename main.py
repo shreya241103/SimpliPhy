@@ -19,7 +19,7 @@ def create(ht, vel):
 
     ball = Ball(space, 20, (200, ht), (0, 255, 0), vel, elasticity= 2/3)
 
-    floor = StaticSegment( space, (0, 0), (800, 0), 10, 2)
+    floor = StaticSegment( space, (0, 2), (800, 2), 10, 5)
     wall_right = StaticSegment( space, (scr_wd, 0), (scr_wd, scr_ht + 1000), 0)
     wall_left = StaticSegment(space, (0, 0), (0, scr_ht + 1000), 0)
 
@@ -27,13 +27,13 @@ collisions = 0
 dist = 0
 def collide(arbiter, space, data):
     global dist, text, textRect
-    font = pygame.font.Font( None,
+    font = pygame.font.Font(None,
                             50)
-    text = font.render(f'{dist}',
+    text = font.render(f'Distance = {dist}',
                        True,
-                       (0, 0, 255))
+                       (0, 20, 55))
     textRect = text.get_rect()
-    textRect.center = trans_coord((700, 600))
+    textRect.center = trans_coord((600, 650))
     global collisions
     collisions += 1
     return True
@@ -47,12 +47,12 @@ def calcDist(arbiter, space, data):
         dist += int(max_d*2/100)
     return True
 
-def updateText(display, data, coord):
+def updateText(display, data, coord, color = (0, 0, 255)):
     font = pygame.font.Font( None,
                             50)
     text = font.render(f'{data}',
                        True,
-                       (0, 0, 255))
+                       color)
     textRect = text.get_rect()
     textRect.center = trans_coord((coord))
     display.blit(text, textRect)
@@ -60,10 +60,12 @@ def updateText(display, data, coord):
 pygame.init()
 font = pygame.font.Font( None,
                             50)
-text = font.render(f'{0}',
-                       True,
-                       (0, 0, 255))
+text = font.render(f'Distance = {0}',
+                    True,
+                    (0, 20, 55))
 textRect = text.get_rect()
+textRect.center = trans_coord((600, 650))
+
 def simulate_bounce(ht, vel):
     display = pygame.display.set_mode((scr_wd, scr_ht))
     clock = pygame.time.Clock()
@@ -81,7 +83,7 @@ def simulate_bounce(ht, vel):
         col.begin = collide
         col.separate = calcDist
         floor.drawSegment(display)
-        updateText(display, collisions, (700, 700))
+        updateText(display, f"Collisions = {collisions}", (600, 700), (0, 255, 255))
         # updateText(display, dist, (700, 600))
         display.blit(text, textRect)
         updateText(display, "1", (6, 100))
@@ -113,34 +115,46 @@ def userInput():
     inp = []
     i = 0
     while active:
+        inputs[i].drawCursor = True
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 active = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     inputs[i].text = inputs[i].text[:-1]
+
                 elif event.key == 13:
                     inp = [ box.text for box in inputs ]
                     active = False
                     break
+
                 elif event.key == pygame.K_TAB:
+                    inputs[i].drawCursor = False
                     i = (i + 1) % num
+                    inputs[i].drawCursor = True
+
                 elif event.key == pygame.K_UP:
+                    inputs[i].drawCursor = False
                     if i > 0:
                         i -= 1
+                    inputs[i].drawCursor = True
+
                 elif event.key == pygame.K_DOWN:
+                    inputs[i].drawCursor = False
                     if i < num - 1:
                         i += 1
+                    inputs[i].drawCursor = True
                 else:
                     inputs[i].text +=  event.unicode
         if active:
-            display.fill((255, 255, 255))
+            display.fill((2, 2, 80))
             for rect in inputs:
                 rect.draw(display)
             pygame.display.flip()
             clock.tick(FPS)
 
     # print(inp)
+    inp[0] = int(inp[0]) * 100
     inp = [ int(i) for i in inp]
     return inp[0], inp[1], inp[2]
 
