@@ -19,7 +19,7 @@ def create(ht, vel):
 
     ball = Ball(space, 20, (200, ht), (0, 255, 0), vel, elasticity= 2/3)
 
-    floor = StaticSegment( space, (0, 2), (800, 2), 10, 5)
+    floor = StaticSegment( space, (0, 2), (800, 2), 10, 2)
     wall_right = StaticSegment( space, (scr_wd, 0), (scr_wd, scr_ht + 1000), 0)
     wall_left = StaticSegment(space, (0, 0), (0, scr_ht + 1000), 0)
 
@@ -36,6 +36,7 @@ def collide(arbiter, space, data):
     textRect.center = trans_coord((600, 650))
     global collisions
     collisions += 1
+    print(collisions)
     return True
 
 def calcDist(arbiter, space, data):
@@ -84,7 +85,6 @@ def simulate_bounce(ht, vel):
         col.separate = calcDist
         floor.drawSegment(display)
         updateText(display, f"Collisions = {collisions}", (600, 700), (0, 255, 255))
-        # updateText(display, dist, (700, 600))
         display.blit(text, textRect)
         updateText(display, "1", (6, 100))
         updateText(display, "2", (6, 200))
@@ -102,8 +102,8 @@ def userInput():
     pygame.init()
     display = pygame.display.set_mode((scr_wd, scr_ht))
     num = 3
-    inputs = [ Input("Height = "), Input("Velocity (x) = "),
-               Input("Velocity (y) = ")]
+    inputs = [ Input("Height = ", size = 40), Input("Velocity (x) = ",  size = 40),
+               Input("Velocity (y) = ",  size = 40)]
     initial = 100, 300
     for box in inputs:
         box.setRect( initial[0], initial[1])
