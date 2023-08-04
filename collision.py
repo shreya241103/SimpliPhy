@@ -75,28 +75,39 @@ def userInput():
     inp = []
     i = 0
     while active:
+        inputs[i].drawCursor = True
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 active = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     inputs[i].text = inputs[i].text[:-1]
+
                 elif event.key == 13:
                     inp = [ box.text for box in inputs ]
                     active = False
                     break
+
                 elif event.key == pygame.K_TAB:
+                    inputs[i].drawCursor = False
                     i = (i + 1) % num
+                    inputs[i].drawCursor = True
+
                 elif event.key == pygame.K_UP:
+                    inputs[i].drawCursor = False
                     if i > 0:
                         i -= 1
+                    inputs[i].drawCursor = True
+
                 elif event.key == pygame.K_DOWN:
+                    inputs[i].drawCursor = False
                     if i < num - 1:
                         i += 1
+                    inputs[i].drawCursor = True
                 else:
                     inputs[i].text +=  event.unicode
         if active:
-            display.fill((255, 255, 255))
+            display.fill((2, 2, 80))
             for rect in inputs:
                 rect.draw(display)
             pygame.display.flip()
