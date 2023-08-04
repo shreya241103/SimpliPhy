@@ -8,8 +8,8 @@ scr_wd, scr_ht = 800, 800
 FPS = 50
 
 def create():
-# Pymunk space
     global space, ball, floor, wall_right, wall_left
+    # Pymunk space
     space = pymunk.Space()
     space.gravity = 0, -980
 
@@ -40,7 +40,7 @@ def updateText(display, data):
     textRect.center = trans_coord((700, 700))
     display.blit(text, textRect)
 
-def simulate():
+def simulate_bounce():
     pygame.init()
     display = pygame.display.set_mode((scr_wd, scr_ht))
     clock = pygame.time.Clock()
@@ -63,7 +63,5 @@ def simulate():
         space.step(1/FPS)
 
 if __name__ == "__main__":
-    simulate()
-    # print("next")
-    # simulate()
+    simulate_bounce()
 

@@ -1,5 +1,6 @@
 import pygame
 import pymunk
+from main import simulate_bounce
 
 # Initialize Pygame
 pygame.init()
@@ -20,61 +21,6 @@ FPS = 50
 
 # Function for application1
 def application1():
-    scr_wd, scr_ht = 800, 800
-    display = pygame.display.set_mode((scr_wd, scr_ht))
-
-    clock = pygame.time.Clock()
-
-    # Pymunk space
-    space = pymunk.Space()
-
-    # Frames per second - frequency
-    FPS = 50
-
-    body = pymunk.Body()
-    body.position = 200, 1000
-
-    # body attached to, radius, offset
-    shape = pymunk.Circle(body, 20)
-    shape.density = 1
-    shape.elasticity = 0.8
-    space.add(body, shape)
-    space.gravity = 0, -980
-
-    # floor
-    floor = pymunk.Body(body_type=pymunk.Body.STATIC)
-    fl_shape = pymunk.Segment(floor, (10, 30), (800, 30), 10)
-    fl_shape.elasticity = 1
-    space.add(floor, fl_shape)
-
-    def trans_coord(coord):
-        return int(coord[0]), int(scr_ht - coord[1])
-
-    def drawSegment(shape, display, color=(0, 0, 0)):
-        ''' Draws Horizontal Segment '''
-        left_end = shape.a
-        right_end = shape.b
-        width = int(shape.radius)
-        coord_left = left_end[0], left_end[1] + width/2
-        coord_right = right_end[0], right_end[1] + width/2
-        pygame.draw.line(display, color, trans_coord(coord_left), trans_coord(coord_right), width)
-
-    def simulate():
-        return_to_menu = False
-
-        while not return_to_menu:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    return_to_menu = True
-
-            display.fill((255, 255, 255))
-            x, y = trans_coord(body.position)
-            pygame.draw.circle(display, (255, 0, 0), (int(x), int(y)), shape.radius)
-            drawSegment(fl_shape, display)
-            pygame.display.update()
-            clock.tick(FPS)
-            space.step(1/FPS)
-
     simulate()
 
 # Function for application2
