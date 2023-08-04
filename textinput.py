@@ -3,7 +3,7 @@ import time
 class Input:
     def __init__(self,
                  name = "Input: ",
-                 size = 40,
+                 size = 25,
                  font_face = None,
                  color = (2, 2, 80)):
         self.name = name
@@ -21,6 +21,7 @@ class Input:
     def setRect(self, left, top, width = 400, height = 40):
         self.rect = pygame.Rect(left, top,
                                 width, height)
+        self.height = height
         x, y = self.rect.topright
         self.cursor = pygame.Rect(  (x, y),
                                     (3, self.rect.height + 20))
@@ -36,7 +37,7 @@ class Input:
                       (self.rect.x, self.rect.y))
         self.cursor.topleft = self.rect.topright
 
-        self.rect.w = max( 400,
+        self.rect.w = max( self.height,
                            txt_surface.get_width() + 10)
 
         if self.drawCursor:
