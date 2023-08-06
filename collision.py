@@ -120,5 +120,5 @@ if __name__ == "__main__":
     B1_mass, B2_mass, B1_vel_x, B1_vel_y, B2_vel_x, B2_vel_y,B1_elas,B2_elas,B1_x,B1_y,B2_x,B2_y,B1_rad,B2_rad  = userInput()
     # print( ht, vel_x, vel_y)
     game(B1_mass, B2_mass, B1_vel_x, B1_vel_y, B2_vel_x, B2_vel_y,B1_elas,B2_elas,B1_x,B1_y,B2_x,B2_y,B1_rad,B2_rad)
-    time.sleep(1)  # Pause for 30 seconds
+    time.sleep(1)  # Pause 30 seconds
     pygame.quit()
